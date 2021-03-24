@@ -9,14 +9,15 @@ class DowloadCaptions(Step):
     def process(self, data, inputs, utils):
         for url in data:
 
-            print('downloading caption for', url)  # check
+            # check file have exist or not
+            print('downloading caption for', url)
             if utils.caption_file_exists(url):
                 print('find exist file')
                 continue
 
+            # main function
             try:
                 source = YouTube(url)
-                print(source.captions)  # check
                 yt_caption = source.captions.get_by_language_code('a.ja')
                 yt_caption_convert_to_srt = (yt_caption.generate_srt_captions())
 
@@ -28,4 +29,5 @@ class DowloadCaptions(Step):
             text_file = open(utils.get_caption_filepath(url), "w", encoding="utf-8")
             text_file.write(yt_caption_convert_to_srt)
             text_file.close()
-            break
+
+
