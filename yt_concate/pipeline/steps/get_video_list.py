@@ -8,6 +8,7 @@ from yt_concate.settings import API_KEY
 
 class GetVideoList(Step):
     def process(self, data, inputs, utils):
+        print('get video list.....') # chcek
         channel_id = inputs['channel_id']
         if utils.vide_list_file_exists(channel_id):
             return self.read_file(utils.get_video_list_filepath(channel_id))
@@ -34,6 +35,7 @@ class GetVideoList(Step):
                 break
         print(video_links)  # chcek
         self.write_to_file(video_links, utils.get_video_list_filepath(channel_id))
+        print('get video list done')
         return video_links
 
     def write_to_file(self, video_links, filepath):

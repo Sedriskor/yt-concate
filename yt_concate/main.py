@@ -1,7 +1,9 @@
 from yt_concate.pipeline.steps.preflight import Preflight
 from yt_concate.pipeline.steps.get_video_list import GetVideoList
+from yt_concate.pipeline.steps.initialize_yt import InitializeYt
 from yt_concate.pipeline.steps.download_caption import DowloadCaptions
 from yt_concate.pipeline.steps.read_caption import ReadCaption
+from yt_concate.pipeline.steps.search import Search
 from yt_concate.pipeline.steps.postflight import Postflight
 
 # from yt_concate.pipeline.steps.stp import StepException
@@ -15,14 +17,17 @@ CHANNEL_ID = 'UCzu_R-RlEXmHUIbfb0GeJDA'  # peko
 
 def main():
     inputs = {
-        'channel_id': CHANNEL_ID
+        'channel_id': CHANNEL_ID,
+        'search_word': 'ペコ',
     }
 
     steps = [
         Preflight(),
         GetVideoList(),
+        InitializeYt(),
         DowloadCaptions(),
         ReadCaption(),
+        Search(),
         Postflight()
     ]
     utils = Utils()
