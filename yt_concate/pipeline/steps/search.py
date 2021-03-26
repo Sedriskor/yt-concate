@@ -16,6 +16,4 @@ class Search(Step):
                 if search_word in caption:
                     time = captions[caption]
                     found.append(Found(yt, caption, time))
-        print(found)
-        print(len(found))
         return found
