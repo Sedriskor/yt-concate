@@ -5,6 +5,7 @@ from yt_concate.pipeline.steps.download_caption import DowloadCaptions
 from yt_concate.pipeline.steps.read_caption import ReadCaption
 from yt_concate.pipeline.steps.search import Search
 from yt_concate.pipeline.steps.downlade_videos import DownladeVideos
+from yt_concate.pipeline.steps.edit_video import EditVideo
 from yt_concate.pipeline.steps.postflight import Postflight
 
 # from yt_concate.pipeline.steps.stp import StepException
@@ -20,6 +21,7 @@ def main():
     inputs = {
         'channel_id': CHANNEL_ID,
         'search_word': 'ペコ',
+        'limit': 20
     }
 
     steps = [
@@ -30,6 +32,7 @@ def main():
         ReadCaption(),
         Search(),
         DownladeVideos(),
+        EditVideo(),
         Postflight()
     ]
     utils = Utils()
