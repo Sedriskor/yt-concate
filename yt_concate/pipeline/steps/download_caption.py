@@ -12,7 +12,7 @@ class DowloadCaptions(Step):
         threads = []
         for i in range(4):
             threads.append(Thread(target=self.download_caption, args=(data[i::4], inputs, utils)))
-            # 必須要用 args=() 來做參數傳遞，否則全部跑完才會跳到第二個process
+
         for thread in threads:
             thread.start()
 

@@ -18,10 +18,15 @@ class EditVideo(Step):
         print('finish cut clips')  # check
 
         # Mixing clips
-        print('star mixing clips')  # check
+        print('start mixing clips')  # check
         final_clip = concatenate_videoclips(clips)
         output_filepath = utils.get_output_filepath(inputs['channel_id'], inputs['search_word'])
         final_clip.write_videofile(output_filepath)
+
+        # closing videofile clip
+        for video in clips:
+            video.close()
+
         print('finish')  # check
 
     # caption_time transfrom into VideoFileClip time Format

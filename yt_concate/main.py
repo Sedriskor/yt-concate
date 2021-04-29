@@ -13,15 +13,18 @@ from yt_concate.utilities import Utils
 
 from yt_concate.pipeline.pipeline import Pipeline
 
-# CHANNEL_ID = 'UCKSVUHI9rbbkXhvAXK-2uxA'
-CHANNEL_ID = 'UCzu_R-RlEXmHUIbfb0GeJDA'  # peko
-
 
 def main():
+    # CHANNEL_ID = 'UCKSVUHI9rbbkXhvAXK-2uxA'
+    CHANNEL_ID = 'UCzu_R-RlEXmHUIbfb0GeJDA'  # peko
+    WORD = 'ペコ'
+    LIMIT = 5
+
     inputs = {
         'channel_id': CHANNEL_ID,
-        'search_word': 'ペコ',
-        'limit': 20
+        'search_word': WORD,
+        'limit': LIMIT,
+        'cleanup': True,
     }
 
     steps = [

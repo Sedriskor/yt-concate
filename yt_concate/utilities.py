@@ -1,9 +1,12 @@
 # helper functions
 import os
+import shutil
+
 from yt_concate.settings import DOWNLOADS_DIR
 from yt_concate.settings import VIDEOS_DIR
 from yt_concate.settings import CAPTIONS_DIR
 from yt_concate.settings import OUTPUT_DIR
+from yt_concate.settings import LOG_DIR
 
 
 class Utils:
@@ -15,6 +18,11 @@ class Utils:
         os.makedirs(VIDEOS_DIR, exist_ok=True)
         os.makedirs(CAPTIONS_DIR, exist_ok=True)
         os.makedirs(OUTPUT_DIR, exist_ok=True)
+        os.makedirs(LOG_DIR, exist_ok=True)
+
+    def remove_dirs(self):
+        shutil.rmtree(VIDEOS_DIR)
+        shutil.rmtree(CAPTIONS_DIR)
 
     def get_video_list_filepath(self, channel_id):
         return os.path.join(DOWNLOADS_DIR, channel_id + '.txt')
