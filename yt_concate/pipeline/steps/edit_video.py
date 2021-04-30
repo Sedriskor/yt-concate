@@ -2,23 +2,25 @@ from moviepy.editor import VideoFileClip
 from moviepy.editor import concatenate_videoclips
 
 from .step import Step
+from yt_concate.model.log import MyLog
 
+log = MyLog('EditVideo')
 
 class EditVideo(Step):
     def process(self, data, inputs, utils):
         # cut video clips
         clips = []
-        print('star cut clips...')  # check
+        log.info('star cut clips...')  # check
         for found in data:
             start, end = self.parse_caption_time(found.time)
             video = VideoFileClip(found.yt.video_filepath).subclip(start, end)
             clips.append(video)
             if len(clips) >= inputs['limit']:
                 break
-        print('finish cut clips')  # check
+        log.info('finish cut clips')  # check
 
         # Mixing clips
-        print('start mixing clips')  # check
+        log.info('start mixing clips')  # check
         final_clip = concatenate_videoclips(clips)
         output_filepath = utils.get_output_filepath(inputs['channel_id'], inputs['search_word'])
         final_clip.write_videofile(output_filepath)
@@ -27,7 +29,7 @@ class EditVideo(Step):
         for video in clips:
             video.close()
 
-        print('finish')  # check
+        log.info('finish !')  # check
 
     # caption_time transfrom into VideoFileClip time Format
     def parse_caption_time(self, caption_time):

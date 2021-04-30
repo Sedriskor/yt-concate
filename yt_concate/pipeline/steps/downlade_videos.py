@@ -1,44 +1,31 @@
 from pytube import YouTube
-from threading import Thread
 import time
 
 from .step import Step
 from yt_concate.settings import VIDEOS_DIR
+from yt_concate.model.log import MyLog
+
+log = MyLog('DownladeVideos')
 
 
 class DownladeVideos(Step):
-    # Multithreading
     def process(self, data, inputs, utils):
-        print('videos to download', len(self.yt_set(data)))
+        yt_set = set([found.yt for found in data])  # Avoid repeated downloads by use
+
+        log.info(f'{len(yt_set)} videos to download ')
 
         start = time.time()
-        threads = []
-        for i in range(4):
-            threads.append(Thread(target=self.downlade_videos, args=(data[i::4], inputs, utils)))
 
-        for thread in threads:
-            thread.start()
-
-        for thread in threads:
-            thread.join()
-
-        end = time.time()
-        print('took', end - start, 'seconds')
-
-        return data
-
-    def downlade_videos(self, data, inputs, utils):
-        yt_set = self.yt_set(data)  # Avoid repeated downloads by use
         for yt in yt_set:
             url = yt.url
-
             # check file have exist or not
             if utils.video_file_exists(yt):
-                print(f'find exist file for {url} , skip')
+                log.info(f'find exist file for {url} , skip')
                 continue
-            print('downlading: ' + url)
+            log.info(f'downlading: {url}')
             YouTube(url).streams.first().download(output_path=VIDEOS_DIR, filename=yt.id)
 
-    @staticmethod
-    def yt_set(data):
-        return set([found.yt for found in data])
+        end = time.time()
+        log.info(f'took {end - start} seconds')
+
+        return data

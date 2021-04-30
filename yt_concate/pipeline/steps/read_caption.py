@@ -1,7 +1,4 @@
-from pprint import pprint
-
 from yt_concate.pipeline.steps.step import Step
-
 
 class ReadCaption(Step):
     def process(self, data, inputs, utils):

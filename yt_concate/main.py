@@ -8,9 +8,7 @@ from yt_concate.pipeline.steps.downlade_videos import DownladeVideos
 from yt_concate.pipeline.steps.edit_video import EditVideo
 from yt_concate.pipeline.steps.postflight import Postflight
 
-# from yt_concate.pipeline.steps.stp import StepException
 from yt_concate.utilities import Utils
-
 from yt_concate.pipeline.pipeline import Pipeline
 
 
@@ -38,6 +36,7 @@ def main():
         EditVideo(),
         Postflight()
     ]
+
     utils = Utils()
     p = Pipeline(steps)
     p.run(inputs, utils)

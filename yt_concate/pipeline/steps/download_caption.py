@@ -3,11 +3,14 @@ from threading import Thread
 import time
 
 from yt_concate.pipeline.steps.step import Step
+from yt_concate.model.log import MyLog
 
+log = MyLog('DowloadCaptions')
 
 class DowloadCaptions(Step):
     # Multithreading
     def process(self, data, inputs, utils):
+
         start = time.time()
         threads = []
         for i in range(4):
@@ -20,16 +23,16 @@ class DowloadCaptions(Step):
             thread.join()
 
         end = time.time()
-        print('took', end - start, 'seconds')
+        log.info(f'took{end - start}seconds')
 
         return data
 
     def download_caption(self, data, inputs, utils):
         for yt in data:
             # check file have exist or not
-            print('downloading caption for', yt.id)
+            log.info(f'downloading caption for {yt.id}')
             if utils.caption_file_exists(yt):
-                print('find exist file')
+                log.info('find exist file')
                 continue
 
             # main function
@@ -39,7 +42,7 @@ class DowloadCaptions(Step):
                 yt_caption_convert_to_srt = yt_caption.generate_srt_captions()
 
             except (KeyError, AttributeError):
-                print('Error when downloading caption', yt.url)
+                log.error(f'when downloading caption {yt.url}')
                 continue
 
             # save the caption to a file named Output.txt
