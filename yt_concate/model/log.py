@@ -3,26 +3,20 @@ from datetime import datetime
 from yt_concate.settings import LOG_DIR
 
 
-# filename = "{:%Y-%m-%d}".format(datetime.name()) + '.log'
-
 class MyLog:
     def __init__(self, __name__):
-        # logging.basicConfig(level=logging.DEBUG,
-        #                     format=LOGGING_FORMAT,
-        #                     datefmt=DATE_FORMAT)
-
         # config
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
         logging.captureWarnings(True)
-        formatter = logging.Formatter('%(asctime)s : %(name)s - %(levelname)s: %(message)s')
+        log_filename = datetime.now().strftime("%Y-%m-%d.log")
+        formatter = logging.Formatter('%(asctime)s [%(name)s] <%(levelname)s> %(message)s')
 
         # file handler
-        log_filename = datetime.now().strftime("%Y-%m-%d.log")
-        file_fandler = logging.FileHandler(LOG_DIR + '/' + log_filename, 'a', 'utf-8')
-        file_fandler.setLevel(logging.DEBUG)
-        file_fandler.setFormatter(formatter)
-        self.logger.addFilter(file_fandler)
+        file_handler = logging.FileHandler(LOG_DIR + '/' + log_filename, 'a', 'utf-8')
+        file_handler.setLevel(logging.WARNING)
+        file_handler.setFormatter(formatter)
+        self.logger.addHandler(file_handler)
 
         # stream handler
         stream_handler = logging.StreamHandler()
